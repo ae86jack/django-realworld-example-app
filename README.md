@@ -1,24 +1,30 @@
-# ![Django DRF Example App](project-logo.png)
+### 项目简介
 
-> ### Example Django DRF codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) API spec.
+把[django-realworld-example-app](django-realworld-example-app)整个服务进行docker化. 
 
-<a href="https://thinkster.io/tutorials/django-json-api" target="_blank"><img width="454" src="https://raw.githubusercontent.com/gothinkster/realworld/master/media/learn-btn-hr.png" /></a>
+### 项目启动
 
-This repo is functionality complete — PR's and issues welcome!
+docker-compose启动, 包括前后端, 数据库等:
+```bash
+docker-compose up
+```
 
-## Installation
+在启动服务后, 创建表:
+```bash
+docker-compose exec backend python manage.py migrate
+```
 
-1. Clone this repository: `git clone git@github.com:gothinkster/productionready-django-api.git`.
-2. `cd` into `conduit-django`: `cd productionready-django-api`.
-3. Install [pyenv](https://github.com/yyuu/pyenv#installation).
-4. Install [pyenv-virtualenv](https://github.com/yyuu/pyenv-virtualenv#installation).
-5. Install Python 3.5.2: `pyenv install 3.5.2`.
-6. Create a new virtualenv called `productionready`: `pyenv virtualenv 3.5.2 productionready`.
-7. Set the local virtualenv to `productionready`: `pyenv local productionready`.
-8. Reload the `pyenv` environment: `pyenv rehash`.
+### 代码修改
+相对原项目做了以下修改:
+- 把conduit/settings.py里的DEBUG, SECRET_KEY, DATABASES改成环境变量.  
+- requirements.txt新增
+    * psycopg2-binary==2.8.3
+    * gunicorn==19.9.0
+    
+### 服务简介
 
-If all went well then your command line prompt should now start with `(productionready)`.
-
-If your command line prompt does not start with `(productionready)` at this point, try running `pyenv activate productionready` or `cd ../productionready-django-api`. 
-
-If pyenv is still not working, visit us in the Thinkster Slack channel so we can help you out.
+- frontend, 前端项目: http://localhost
+- db, Postgresql数据库, 初始化时新建数据库`conduit`, 当前设置用户名为`postgres`, 密码为`pwd`
+- pgadmin, PostgreSQL的Web管理界面: http://localhost:5050, 当前设置用户名为`admin`, 密码为`pwd`. 连接数据库, `Host name/address`设为`db`, `Port`为`5432`, `Username`为`postgres`, `Password`为`pwd`
+- backend, 后端项目: http://localhost/api/
+- proxy, 反向代理、负载均衡, [traefik](https://docs.traefik.io/), Dashboard界面: http://localhost:8090/dashboard
