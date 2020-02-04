@@ -1,6 +1,6 @@
 ### 项目简介
 
-把[django-realworld-example-app](django-realworld-example-app)整个服务进行docker化. 
+把[django-realworld-example-app](https://github.com/gothinkster/django-realworld-example-app)整个服务进行docker化. 
 
 ### 项目启动
 
