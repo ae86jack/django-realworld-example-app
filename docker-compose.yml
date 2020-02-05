@@ -20,7 +20,7 @@ services:
       DB_PORT: 5432
     labels:
       traefik.enable: "true"
-      traefik.frontend.rule: PathPrefix:/api,/swagger,/swagger-ui
+      traefik.frontend.rule: PathPrefix:/api,/admin
       traefik.port: '80'
       traefik.tags: conduit.com
     volumes:
